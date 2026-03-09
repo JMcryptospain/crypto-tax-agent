@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Coins, Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Coins, Mail, UserRound } from "lucide-react";
 import Link from "next/link";
 
 export default function AuthPage() {
@@ -10,6 +11,8 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [guestLoading, setGuestLoading] = useState(false);
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -79,10 +82,40 @@ export default function AuthPage() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || guestLoading}
               className="w-full py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-medium text-sm transition disabled:opacity-50"
             >
               {loading ? "Sending..." : "Send magic link"}
+            </button>
+
+            <div className="relative my-5">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-zinc-800" />
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-zinc-900/30 px-2 text-zinc-600">or</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              disabled={guestLoading || loading}
+              onClick={async () => {
+                setGuestLoading(true);
+                setError(null);
+                const supabase = createClient();
+                const { error } = await supabase.auth.signInAnonymously();
+                if (error) {
+                  setError(error.message);
+                  setGuestLoading(false);
+                } else {
+                  router.push("/dashboard");
+                }
+              }}
+              className="w-full py-2.5 rounded-lg border border-zinc-700 hover:border-zinc-600 text-zinc-300 font-medium text-sm transition disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <UserRound className="h-4 w-4" />
+              {guestLoading ? "Signing in..." : "Continue as guest"}
             </button>
           </form>
         )}
