@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@14 . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm 2>&1 | tail -20)",
+      "Bash(npx create-next-app@14 temp-app --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm 2>&1 | tail -5)",
+      "Bash(shopt -s dotglob && mv temp-app/* temp-app/.* . 2>/dev/null; rmdir temp-app)",
+      "Bash(mv temp-app/* . && mv temp-app/.eslintrc.json temp-app/.gitignore . 2>/dev/null; rm -rf temp-app)",
+      "Bash(npm install @anthropic-ai/sdk @supabase/supabase-js @supabase/ssr lucide-react papaparse zod 2>&1 | tail -5)",
+      "Bash(npm install -D @types/papaparse 2>&1 | tail -3)",
+      "Bash(npx next build 2>&1 | tail -30)",
+      "Bash(open /Users/joaquin/crypto-tax-agent/.env.local)",
+      "Bash(npx next build 2>&1 | tail -25)",
+      "Bash(npm run dev)"
+    ]
+  }
+}
