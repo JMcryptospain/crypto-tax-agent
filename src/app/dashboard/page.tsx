@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Country } from "@/types";
 import ReactMarkdown from "react-markdown";
+import { TaxChat } from "@/components/tax-chat";
 import {
   Coins,
   Wallet,
@@ -276,6 +277,15 @@ export default function DashboardPage() {
               <ReactMarkdown>{report}</ReactMarkdown>
             </div>
           </div>
+        )}
+
+        {/* Chat */}
+        {report && (
+          <TaxChat
+            country={country}
+            taxYear={taxYear}
+            reportSummary={report}
+          />
         )}
       </main>
     </div>
