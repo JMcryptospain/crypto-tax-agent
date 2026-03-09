@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Country } from "@/types";
+import ReactMarkdown from "react-markdown";
 import {
   Coins,
   Wallet,
@@ -271,8 +272,8 @@ export default function DashboardPage() {
               <FileText className="h-5 w-5 text-emerald-400" />
               <h2 className="font-semibold">Your Tax Report</h2>
             </div>
-            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-zinc-100 prose-p:text-zinc-400 prose-strong:text-zinc-200 prose-li:text-zinc-400">
-              <div dangerouslySetInnerHTML={{ __html: report }} />
+            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-zinc-100 prose-p:text-zinc-400 prose-strong:text-zinc-200 prose-li:text-zinc-400 prose-code:text-emerald-400 prose-hr:border-zinc-800">
+              <ReactMarkdown>{report}</ReactMarkdown>
             </div>
           </div>
         )}
