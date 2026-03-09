@@ -20,7 +20,7 @@ export default function AuthPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/api/auth/callback`,
+        emailRedirectTo: `https://crypto-tax-agent-production.up.railway.app/auth/callback`,
       },
     });
 
