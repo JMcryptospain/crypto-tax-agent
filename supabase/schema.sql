@@ -51,7 +51,7 @@ create table public.transactions (
   source text not null check (source in ('wallet', 'csv_binance', 'csv_coinbase')),
   tx_hash text,
   timestamp timestamptz not null,
-  type text not null check (type in ('buy', 'sell', 'swap', 'transfer', 'staking_reward', 'airdrop', 'unknown')),
+  type text not null check (type in ('buy', 'sell', 'swap', 'transfer', 'staking_reward', 'airdrop', 'unknown', 'transfer_in', 'transfer_out', 'contract_interaction', 'token_transfer')),
   asset_in text,
   amount_in numeric,
   asset_out text,

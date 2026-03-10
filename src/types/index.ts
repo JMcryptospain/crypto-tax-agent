@@ -22,7 +22,7 @@ export interface Transaction {
   source: "wallet" | "csv_binance" | "csv_coinbase";
   tx_hash?: string;
   timestamp: string;
-  type: "buy" | "sell" | "swap" | "transfer" | "staking_reward" | "airdrop" | "unknown";
+  type: "buy" | "sell" | "swap" | "transfer" | "staking_reward" | "airdrop" | "unknown" | "transfer_in" | "transfer_out" | "contract_interaction" | "token_transfer";
   asset_in?: string;
   amount_in?: number;
   asset_out?: string;

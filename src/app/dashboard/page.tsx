@@ -24,6 +24,7 @@ export default function DashboardPage() {
   const [detectedChains, setDetectedChains] = useState<
     { chain: string; name: string; balance: number; tx_count: number }[]
   >([]);
+  const [txBreakdown, setTxBreakdown] = useState<Record<string, number> | null>(null);
 
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [exchange, setExchange] = useState<"binance" | "coinbase">("binance");
@@ -48,8 +49,9 @@ export default function DashboardPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       setDetectedChains(data.chains_detected);
+      setTxBreakdown(data.breakdown);
       setWalletResult(
-        `Connected! Found activity on ${data.chains_detected.length} chain${data.chains_detected.length !== 1 ? "s" : ""}. Imported ${data.transactions_imported} transactions.`
+        `Connected! Imported ${data.transactions_imported} transactions.`
       );
       setWalletAddress("");
     } catch (e) {
@@ -165,6 +167,7 @@ export default function DashboardPage() {
             )}
             {detectedChains.length > 0 && (
               <div className="mt-3 space-y-1.5">
+                <p className="text-xs text-zinc-500 font-medium">Chains detected</p>
                 {detectedChains.map((c) => (
                   <div
                     key={c.chain}
@@ -172,10 +175,28 @@ export default function DashboardPage() {
                   >
                     <span className="text-zinc-300">{c.name}</span>
                     <span className="text-zinc-500">
-                      {c.balance.toFixed(4)} native &middot; {c.tx_count} txs
+                      {c.balance.toFixed(4)} native
                     </span>
                   </div>
                 ))}
+              </div>
+            )}
+            {txBreakdown && (
+              <div className="mt-3 space-y-1.5">
+                <p className="text-xs text-zinc-500 font-medium">Transactions by type</p>
+                {Object.entries(txBreakdown)
+                  .filter(([, count]) => count > 0)
+                  .map(([type, count]) => (
+                    <div
+                      key={type}
+                      className="flex items-center justify-between text-xs px-3 py-1.5 rounded-lg bg-zinc-800/50"
+                    >
+                      <span className="text-zinc-300">
+                        {type.replace(/_/g, " ")}
+                      </span>
+                      <span className="text-zinc-500">{count}</span>
+                    </div>
+                  ))}
               </div>
             )}
           </div>

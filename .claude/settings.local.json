@@ -10,7 +10,8 @@
       "Bash(npx next build 2>&1 | tail -30)",
       "Bash(open /Users/joaquin/crypto-tax-agent/.env.local)",
       "Bash(npx next build 2>&1 | tail -25)",
-      "Bash(npm run dev)"
+      "Bash(npm run dev)",
+      "Bash(cd ~/crypto-tax-agent && npx next build 2>&1 | tail -25)"
     ]
   }
 }
